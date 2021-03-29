@@ -1,18 +1,13 @@
 
-find_package( OpenThreads )
-find_package( osg )
-find_package( osgDB )
-find_package( osgUtil )
-find_package( osgViewer )
-find_package(osgGA)       
-       
-set(OSG_LIBRARIES osg osgViewer OpenThreads osgDB osgGA osgUtil osgText)       
+# NOTE: Make sure a previous installation of OpenSceneGraph is not installed in /usr/lib/x86_64-linux-gnu/
+set(OSG_DIR /usr/local/lib64)
+find_package(OpenSceneGraph REQUIRED osg osgDB osgUtil osgViewer osgGA)
        
 include_directories(
   SYSTEM  
   ${Boost_INCLUDE_DIRS}
   ${OpenRAVE_INCLUDE_DIRS}
-  ${OSG_INCLUDE_DIRS}
+  ${OPENSCENEGRAPH_INCLUDE_DIRS}
 )
 
 if (APPLE) 
@@ -27,7 +22,8 @@ add_library(osgviewer
   osgviewer.cpp 
   robot_ui.cpp
 )
-target_link_libraries(osgviewer ${OSG_LIBRARIES} ${OpenRAVE_BOTH_LIBRARIES} ${Boost_SYSTEM_LIBRARY} utils)
+
+target_link_libraries(osgviewer ${OPENSCENEGRAPH_LIBRARIES} ${OpenRAVE_BOTH_LIBRARIES} ${Boost_SYSTEM_LIBRARY} utils)
 
 
 #add_subdirectory(test)
